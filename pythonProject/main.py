@@ -1,4 +1,5 @@
 from tkinter import *
+from math import sqrt
 from fractions import Fraction
 
 # Function to perform addition
@@ -40,6 +41,14 @@ def divide():
 def exponentiate():
     try:
         result_value = float(num1.get()) ** float(num2.get())
+        result.set(format_result(result_value))
+    except ValueError:
+        result.set("Error")
+
+# Function to perform square root
+def square_root():
+    try:
+        result_value = sqrt(float(num1.get()))
         result.set(format_result(result_value))
     except ValueError:
         result.set("Error")
@@ -100,6 +109,9 @@ Button(button_frame, text="Subtract", command=subtract, width=10).grid(row=0, co
 
 # Button to perform multiplication
 Button(button_frame, text="Multiply", command=multiply, width=10).grid(row=0, column=2, padx=5, pady=5)
+
+# Button to perform square root
+Button(button_frame, text="Square Root", command=square_root, width=10).grid(row=1, column=2, padx=5, pady=5)
 
 # Button to perform division
 Button(button_frame, text="Divide", command=divide, width=10).grid(row=0, column=3, padx=5, pady=5)
