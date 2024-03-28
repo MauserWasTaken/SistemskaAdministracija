@@ -1,5 +1,5 @@
 from tkinter import *
-from math import sqrt
+from math import sqrt, factorial
 from fractions import Fraction
 
 # Function to perform addition
@@ -49,6 +49,14 @@ def exponentiate():
 def square_root():
     try:
         result_value = sqrt(float(num1.get()))
+        result.set(format_result(result_value))
+    except ValueError:
+        result.set("Error")
+
+# Function to perform factorial
+def calculate_factorial():
+    try:
+        result_value = factorial(int(num1.get()))
         result.set(format_result(result_value))
     except ValueError:
         result.set("Error")
@@ -110,22 +118,25 @@ Button(button_frame, text="Subtract", command=subtract, width=10).grid(row=0, co
 # Button to perform multiplication
 Button(button_frame, text="Multiply", command=multiply, width=10).grid(row=0, column=2, padx=5, pady=5)
 
+# Button to perform exponentiation
+Button(button_frame, text="Exponentiate", command=exponentiate, width=10).grid(row=0, column=3, padx=5, pady=5)
+
 # Button to perform square root
 Button(button_frame, text="Square Root", command=square_root, width=10).grid(row=1, column=2, padx=5, pady=5)
 
-# Button to perform division
-Button(button_frame, text="Divide", command=divide, width=10).grid(row=0, column=3, padx=5, pady=5)
+# Button to perform factorial
+Button(button_frame, text="Factorial", command=calculate_factorial, width=10).grid(row=0, column=5, padx=5, pady=5)
 
-# Button to perform exponentiation
-Button(button_frame, text="Exponentiate", command=exponentiate, width=10).grid(row=0, column=4, padx=5, pady=5)
+# Button to perform division
+Button(button_frame, text="Divide", command=divide, width=10).grid(row=0, column=4, padx=5, pady=5)
 
 # Button to toggle displaying results as fractions or not
 fraction_button = Button(button_frame, text="Fraction", command=toggle_fraction, width=10)
-fraction_button.grid(row=1, column=3, padx=5, pady=5)
+fraction_button.grid(row=3, column=3, padx=5, pady=5)
 
 # Label to indicate the state of displaying fractions
 fraction_label = Label(button_frame, text="Fractions: Off")
-fraction_label.grid(row=2, column=3, padx=5, pady=5)
+fraction_label.grid(row=4, column=3, padx=5, pady=5)
 
 # Display result
 Label(window, text="Result:").grid(row=2, column=0, padx=5, pady=5)
