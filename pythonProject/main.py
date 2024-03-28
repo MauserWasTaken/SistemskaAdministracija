@@ -14,6 +14,13 @@ def subtract():
     except ValueError:
         result.set("Error")
 
+# Function to perform multiplication
+def multiply():
+    try:
+        result.set(float(num1.get()) * float(num2.get()))
+    except ValueError:
+        result.set("Error")
+
 # Create main window
 window = Tk()
 window.title("Simple Calculator")
@@ -43,6 +50,9 @@ Button(button_frame, text="Add", command=add, width=10).grid(row=0, column=0, pa
 
 # Button to perform subtraction
 Button(button_frame, text="Subtract", command=subtract, width=10).grid(row=0, column=1, padx=5, pady=5)
+
+# Button to perform multiplication
+Button(button_frame, text="Multiply", command=multiply, width=10).grid(row=0, column=2, padx=5, pady=5)
 
 # Display result
 Label(window, text="Result:").grid(row=2, column=0, padx=5, pady=5)
