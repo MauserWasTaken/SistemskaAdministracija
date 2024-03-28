@@ -36,6 +36,14 @@ def divide():
     except ValueError:
         result.set("Error")
 
+# Function to perform exponentiation
+def exponentiate():
+    try:
+        result_value = float(num1.get()) ** float(num2.get())
+        result.set(format_result(result_value))
+    except ValueError:
+        result.set("Error")
+
 # Function to format the result as a fraction if possible
 def format_result(value):
     if display_as_fraction.get():
@@ -95,6 +103,9 @@ Button(button_frame, text="Multiply", command=multiply, width=10).grid(row=0, co
 
 # Button to perform division
 Button(button_frame, text="Divide", command=divide, width=10).grid(row=0, column=3, padx=5, pady=5)
+
+# Button to perform exponentiation
+Button(button_frame, text="Exponentiate", command=exponentiate, width=10).grid(row=0, column=4, padx=5, pady=5)
 
 # Button to toggle displaying results as fractions or not
 fraction_button = Button(button_frame, text="Fraction", command=toggle_fraction, width=10)
