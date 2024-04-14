@@ -1,0 +1,42 @@
+# 27516_test.yml
+
+name: Testiranje kode
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout kodo
+      uses: actions/checkout@v2
+
+    - name: Preveri testne skripte
+      run: |
+        if [ ! -d "tests" ]; then
+          echo "Napaka: Mapa s testi ne obstaja." > napaka.txt
+          exit 1
+        fi
+
+    - name: Pripravi izvajalno okolje za teste
+      run: |
+        pip install pytest
+        # Tukaj lahko dodate še druge potrebne ukaze za pripravo okolja za teste
+
+    - name: Poženi teste za seštevanje
+      run: |
+        pytest tests/test_addition.py
+
+    - name: Poženi teste za odštevanje
+      run: |
+        pytest tests/test_subtraction.py
+
+    - name: Preveri napake
+      if: failure()
+      run: |
+        cat napaka.txt
+
