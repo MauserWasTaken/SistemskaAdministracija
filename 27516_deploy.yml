@@ -1,4 +1,4 @@
-name: Objava na DockerHub
+name: Deploy aplikacije
 
 on:
   push:
@@ -6,20 +6,40 @@ on:
       - master
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout kodo
       uses: actions/checkout@v2
 
-    - name: Pripravi Docker zabojnik
+    - name: Preveri testne skripte
       run: |
-        # Tu dodajte ukaze za izgradnjo Docker zabojnika.
+        if [ ! -d "tests" ]; then
+          echo "Napaka: Mapa s testi ne obstaja." > napaka.txt
+          exit 1
+        fi
 
-    - name: Prijavi se v DockerHub
-      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Pripravi izvajalno okolje za teste
+      run: |
+        pip install pytest
+        
+        pytest tests/test_prepare_environment.py
 
-    - name: Naloži Docker zabojnik
-      run: docker push ${{ secrets.DOCKER_IMAGE }}
+    - name: Poženi teste za seštevanje
+      run: |
+        pytest tests/test_addition.py
+
+    - name: Poženi teste za odštevanje
+      run: |
+        pytest tests/test_subtraction.py
+
+    - name: Pripravi in potisni Docker sliko
+      run: |
+        ./zapakiraj_27516.sh
+
+    - name: Preveri napake
+      if: failure()
+      run: |
+        cat napaka.txt
 
